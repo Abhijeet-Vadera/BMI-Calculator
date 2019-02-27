@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>C3 Class - BMI Calculator</title>
+    <link rel="stylesheet" href="animate.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
+        <style>
+        img{
+            width:115px;
+            height:274px;
+        }
+        </style>
+</head>
+
+<body>
+    <!-- As a heading -->
+    <nav class="navbar navbar-dark bg-dark animated slideInDown">
+        <span class="navbar-brand mb-0 h1">BMI Calculator</span>
+    </nav>
+
+    <div class="jumbotron animated flipInX">
+        <table id="table4" class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th scope="col"><strong>Measurement Units</strong></th>
+                    <th scope="col">
+                        <div><strong>Formula and Calculation</strong></div>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="row">Metric System: Kilograms and meters (or centimeters)</th>
+                    <td>Formula: weight (kg) / [height (m)]<sup>2</sup>
+                        <p>With the metric system, the formula for BMI is weight in kilograms divided by height in
+                            meters squared.
+                            Because height is commonly measured in centimeters, divide height in centimeters by 100 to
+                            obtain height
+                            in meters.</p>
+                        <p>Example: Weight = 68 kg, Height = 165 cm (1.65 m)<br>
+                            Calculation: 68 ÷ (1.65)<sup>2</sup> = 24.98</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">English System: Pounds and inches</th>
+                    <td>Formula: weight (lb) / [height (in)]<sup>2</sup> x 703
+                        <p>Calculate BMI by dividing weight in pounds (lbs) by height in inches (in) squared and
+                            multiplying by a
+                            conversion factor of 703.</p>
+                        <p>Example: Weight = 150 lbs, Height = 5’5″ (65″)<br>
+                            Calculation: [150 ÷ (65)<sup>2</sup>] x 703 = 24.96</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+                <form>
+                	<div class="btn-group-toggle" data-toggle="buttons" onClick="tgl()">
+                          <label class="btn btn-success">
+                            <input type="checkbox" checked autocomplete="off">English</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Weight</label>
+                        <input type="text" class="form-control" id="weight">
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Height</label>
+                        <input type="text" class="form-control" id="height">
+                    </div>                    
+                    <button type="button" class="btn btn-primary" onClick="calculateBMI()">Calculate</button>
+                </form>
+            </div>
+            <div class="col-lg-3">
+                <div class="card text-center">
+                    <div class="card-header">
+                        Hi User
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">25.95</h5>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Overweight
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img src="images/1 - Underweight.jpg"/>
+                <img src="images/2 - Normal.jpg"/>
+                <img src="images/3 - Overweight.jpg"/>
+                <img src="images/4 - Obese.jpg"/>
+                <img src="images/5 - Extreme Obese.jpg"/>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function calculateBMI(){
+        var bmi;
+        var weight = document.getElementsByTagName("input")[2].value;
+        var height = document.getElementsByTagName("input")[3].value;
+
+        if(document.getElementsByTagName("input")[0].checked){
+            bmi = (weight/(height*height))*703;
+        }
+        else{
+            bmi = weight/(height*height);
+        }
+
+        document.getElementsByClassName("card-header")[0]. innerHTML = 
+        "Hi "+ document.getElementsByTagName("input")[1].value + ", your BMI is";
+
+        document.getElementsByClassName("card-body")[0]. innerHTML = bmi.toFixed(2);
+
+        if(bmi < 18.5){
+            document.getElementsByClassName("card-footer")[0]. innerHTML = "Underweight";
+            document.getElementsByTagName("img")[0].classList.add("animated", "bounce");
+            document.getElementsByTagName("img")[0].addEventListener("animationend", function(){
+                document.getElementsByTagName("img")[0].classList.remove("animated", "bounce");
+            });
+        }
+        else if(bmi < 24.9){
+            document.getElementsByClassName("card-footer")[0]. innerHTML = "Normal";
+            document.getElementsByTagName("img")[1].classList.add("animated", "bounce");
+            document.getElementsByTagName("img")[1].addEventListener("animationend", function(){
+                document.getElementsByTagName("img")[1].classList.remove("animated", "bounce");
+            });
+        }
+        else if(bmi < 29.9){
+            document.getElementsByClassName("card-footer")[0]. innerHTML = "Overweight";
+            document.getElementsByTagName("img")[2].classList.add("animated", "bounce");
+            document.getElementsByTagName("img")[2].addEventListener("animationend", function(){
+                document.getElementsByTagName("img")[2].classList.remove("animated", "bounce");
+            });
+        }
+        else if(bmi < 34.9){
+            document.getElementsByClassName("card-footer")[0]. innerHTML = "Obese";
+            document.getElementsByTagName("img")[3].classList.add("animated", "bounce");
+            document.getElementsByTagName("img")[3].addEventListener("animationend", function(){
+                document.getElementsByTagName("img")[3].classList.remove("animated", "bounce");
+            });
+        }
+        else{
+            document.getElementsByClassName("card-footer")[0]. innerHTML = "Extreme Obese";
+            document.getElementsByTagName("img")[4].classList.add("animated", "bounce");
+            document.getElementsByTagName("img")[4].addEventListener("animationend", function(){
+                document.getElementsByTagName("img")[4].classList.remove("animated", "bounce");
+            });
+        }
+    }
+	function tgl()
+	{		
+		  document.getElementsByTagName("label")[0].classList.toggle("btn-danger");
+	}
+    </script>
+
+</body>
+
+</html>
